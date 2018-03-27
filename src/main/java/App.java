@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class App {
 
-    private static ClassPathXmlApplicationContext ctx;
+    
     private final Map<EventType, EventLogger> loggers;
     private Client client;
     private EventLogger eventLogger;
@@ -20,6 +20,9 @@ public class App {
 
     public static void main(String... args) {
 
+        ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+
+
         App app = (App) ctx.getBean("app");
         app.logEvent(EventType.INFO, "Hello");
         app.logEvent(EventType.ERROR, "HI");
@@ -28,6 +31,7 @@ public class App {
     }
 
     public void logEvent(EventType type, String msg) {
+      ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         EventLogger logger = loggers.get(type);
         String message = msg.replaceAll(client.getId(), client.getFullName());
         Event event = (Event) ctx.getBean("event");
