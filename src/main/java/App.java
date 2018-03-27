@@ -15,13 +15,14 @@ public class App {
         this.client = client;
         this.eventLogger = eventLogger;
         this.loggers = loggers;
+        ctx = new ClassPathXmlApplicationContext ("spring.xml");
     }
 
     public static void main(String... args) {
-        ctx = new ClassPathXmlApplicationContext ("spring.xml");
-        App app = (App) ctx.getBean("app");
 
+        App app = (App) ctx.getBean("app");
         app.logEvent(EventType.INFO, "Hello");
+        app.logEvent(EventType.ERROR, "HI");
 
         ctx.close();
     }
