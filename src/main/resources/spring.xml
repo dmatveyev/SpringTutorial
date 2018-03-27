@@ -13,8 +13,8 @@
     <bean id ="client" class = "Client">
         <constructor-arg value="1"/>
         <constructor-arg value="John Smith"/>
+        <property name="greeting" value="Hello there!"/>
     </bean>
-
     <bean id ="app" class = "App">
         <constructor-arg ref ="client"/>
         <constructor-arg ref ="cachedFileEventLogger"/>

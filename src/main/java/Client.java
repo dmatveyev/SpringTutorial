@@ -24,4 +24,8 @@ public class Client {
     public void setFullName(final String fullName) {
         this.fullName = fullName;
     }
+
+    public void setGreeting(String str) {
+        
+    }
 }
