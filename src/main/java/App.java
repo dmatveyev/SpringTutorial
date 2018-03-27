@@ -2,32 +2,43 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.Map;
+
 public class App {
 
+    
+    private final Map<EventType, EventLogger> loggers;
     private Client client;
     private EventLogger eventLogger;
 
-    public App(final Client client, final EventLogger eventLogger) {
+    public App(final Client client, final EventLogger eventLogger, Map<EventType,EventLogger> loggers) {
         this.client = client;
         this.eventLogger = eventLogger;
+        this.loggers = loggers;
+        ctx = new ClassPathXmlApplicationContext ("spring.xml");
     }
 
     public static void main(String... args) {
+
         ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+
+
         App app = (App) ctx.getBean("app");
-        Event e1 = (Event) ctx.getBean("event");
-        Event e2 = (Event) ctx.getBean("event");
-        e1.setMsg("Some event for 1");
-        app.logEvent(e1);
-        e2.setMsg("Some event for 2");
-        app.logEvent(e2);
+        app.logEvent(EventType.INFO, "Hello");
+        app.logEvent(EventType.ERROR, "HI");
+
         ctx.close();
     }
 
-    public void logEvent(Event event) {
-        String message = event.getMsg().replaceAll(client.getId(), client.getFullName());
+    public void logEvent(EventType type, String msg) {
+      ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+        EventLogger logger = loggers.get(type);
+        String message = msg.replaceAll(client.getId(), client.getFullName());
+        Event event = (Event) ctx.getBean("event");
         event.setMsg(message);
-        eventLogger.logEvent(event);
+        if(logger == null)
+            logger = eventLogger;
+        logger.logEvent(event);
     }
 
 }
