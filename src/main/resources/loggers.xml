@@ -11,4 +11,12 @@
           parent="fileEventLogger">
         <constructor-arg  value="10" />
     </bean>
+    <bean id="combinedEventLogger" class="CombinedEventLogger">
+        <constructor-arg>
+            <list>
+                <ref bean="consoleEventLogger"/>
+                <ref bean="fileEventLogger"/>
+            </list>
+        </constructor-arg>
+    </bean>
 </beans>
