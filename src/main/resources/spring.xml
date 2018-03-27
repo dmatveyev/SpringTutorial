@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-3.2.xsd">
     <context:component-scan base-package="server"/>
     <context:component-scan base-package="messageSystem"/>
     <context:annotation-config/>
     <import resource="loggers.xml"/>
-    <bean id ="client" class = "Client">
-        <constructor-arg value="1"/>
-        <constructor-arg value="John Smith"/>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:client.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
     </bean>
-    <bean id ="app" class = "App">
-        <constructor-arg ref ="client"/>
-        <constructor-arg ref ="eventLogger"/>
+    <bean id="client" class="Client">
+        <constructor-arg value="${id}"/>
+        <constructor-arg value="${name}"/>
+        <property name="greeting" value="${greeting}"/>
+    </bean>
+    <bean id="app" class="App">
+        <constructor-arg ref="client"/>
+        <constructor-arg ref="eventLogger"/>
         <constructor-arg>
             <map>
                 <entry key="INFO" value-ref="eventLogger"/>
@@ -24,12 +37,12 @@
             </map>
         </constructor-arg>
     </bean>
-    <bean id="event" class = "Event" scope="prototype">
-         <constructor-arg>
-             <bean class = "java.util.Date"/>
-         </constructor-arg>
-         <constructor-arg>
+    <bean id="event" class="Event" scope="prototype">
+        <constructor-arg>
+            <bean class="java.util.Date"/>
+        </constructor-arg>
+        <constructor-arg>
             <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance"/>
-         </constructor-arg>
+        </constructor-arg>
     </bean>
 </beans>

@@ -23,8 +23,8 @@ public class App {
 
 
         App app = (App) ctx.getBean("app");
-        app.logEvent(EventType.INFO, "Hello");
-        app.logEvent(EventType.ERROR, "HI");
+        app.logEvent(EventType.INFO, "Some event for user 1");
+        app.logEvent(EventType.ERROR, "Some event for user 2");
 
         ctx.close();
     }
