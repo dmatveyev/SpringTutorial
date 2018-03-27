@@ -14,7 +14,7 @@
     <bean id="combinedEventLogger" class="CombinedEventLogger">
         <constructor-arg>
             <list>
-                <ref bean="consoleEventLogger"/>
+                <ref bean="eventLogger"/>
                 <ref bean="fileEventLogger"/>
             </list>
         </constructor-arg>

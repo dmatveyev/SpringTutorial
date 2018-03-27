@@ -16,10 +16,10 @@
     </bean>
     <bean id ="app" class = "App">
         <constructor-arg ref ="client"/>
-        <constructor-arg ref ="consoleEventLogger"/>
+        <constructor-arg ref ="eventLogger"/>
         <constructor-arg>
             <map>
-                <entry key="INFO" value-ref="consoleEventLogger"/>
+                <entry key="INFO" value-ref="eventLogger"/>
                 <entry key="ERROR" value-ref="combinedEventLogger"/>
             </map>
         </constructor-arg>

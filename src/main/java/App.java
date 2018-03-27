@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class App {
 
-    
+
     private final Map<EventType, EventLogger> loggers;
     private Client client;
     private EventLogger eventLogger;
@@ -15,11 +15,10 @@ public class App {
         this.client = client;
         this.eventLogger = eventLogger;
         this.loggers = loggers;
-        ctx = new ClassPathXmlApplicationContext ("spring.xml");
+
     }
 
     public static void main(String... args) {
-
         ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
 
 
