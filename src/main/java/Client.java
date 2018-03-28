@@ -3,6 +3,7 @@ public class Client {
 
     private String id;
     private String fullName;
+    private String greeting;
 
     public Client(final String id, final String fullName) {
         this.fullName = fullName;
@@ -25,7 +26,13 @@ public class Client {
         this.fullName = fullName;
     }
 
-    public void setGreeting(String str) {
-        
+    public String getGreeting() {
+        return greeting;
     }
+
+    public void setGreeting(final String greeting) {
+        this.greeting = greeting;
+    }
+
+
 }
