@@ -50,4 +50,7 @@
         </constructor-arg>
     </bean>
     <bean id="statisticAspect" class="StatisticAspect"/>
+    <bean id="maxCountAspect" class="MaxCountAspect">
+        <property name="eventLogger"  ref="fileEventLogger"/>
+    </bean>
 </beans>
