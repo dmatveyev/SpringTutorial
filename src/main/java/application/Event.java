@@ -1,3 +1,5 @@
+package application;
+
 import javax.swing.text.DateFormatter;
 import java.text.DateFormat;
 import java.util.Date;
@@ -9,7 +11,7 @@ public class Event {
     private DateFormat df;
 
     public Event(final Date date, DateFormat df) {
-        this.id = (int) (10000000*Math.random());
+        this.id = (int) (10000000 * Math.random());
         this.date = date;
         this.df = df;
     }
@@ -24,10 +26,14 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Event{" +
+        return "application.Event{" +
                 "id=" + id +
                 ", msg='" + msg + '\'' +
                 ", date=" + df.format(date) +
                 '}';
+    }
+
+    public int getId() {
+        return id;
     }
 }

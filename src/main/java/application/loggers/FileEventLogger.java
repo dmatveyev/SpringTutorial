@@ -1,3 +1,6 @@
+package application.loggers;
+
+import application.Event;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -12,7 +15,7 @@ public class FileEventLogger implements EventLogger {
         this.fileName = fileName;
     }
 
-    private void  init() throws IOException {
+    private void init() throws IOException {
         File file = new File(fileName);
         if (!file.canWrite()) {
             throw new IOException();

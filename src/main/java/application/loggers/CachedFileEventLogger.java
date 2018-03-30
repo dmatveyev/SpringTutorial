@@ -1,3 +1,7 @@
+package application.loggers;
+
+import application.Event;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,21 +18,21 @@ public class CachedFileEventLogger extends FileEventLogger {
 
     @Override
     public void logEvent(final Event event) {
-       cache.add(event);
+        cache.add(event);
 
-       if(cache.size() == cacheSize) {
-           writeEventsFromCache();
-           cache.clear();
-       }
+        if (cache.size() == cacheSize) {
+            writeEventsFromCache();
+            cache.clear();
+        }
     }
 
     private void writeEventsFromCache() {
-        for (Event e: cache) {
+        for (Event e : cache) {
             super.logEvent(e);
         }
     }
 
-    private void destroy(){
+    private void destroy() {
         if (!cache.isEmpty()) {
             writeEventsFromCache();
         }

@@ -1,5 +1,8 @@
+package application.aspects;
+
+import application.Event;
+import application.loggers.EventLogger;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
@@ -12,17 +15,18 @@ public class MaxCountAspect {
     private int MAX_ALLOWED = 1;
     private EventLogger eventLogger;
     
-    @Around("execution(* ConsoleEventLogger.logEvent(..)) && args(evt)")
-    public void aroundLogEvent(ProceedingJoinPoint jp, Object evt) throws Throwable {
+    @Around("execution(* application.loggers.ConsoleEventLogger.logEvent(..)) && args(evt)")
+    public void aroundLogEvent(ProceedingJoinPoint jp, Event evt) throws Throwable {
         // getting count
 
         if(count < MAX_ALLOWED) {
             //do write in consoleLogger
             jp.proceed(new Object[] {evt});
+            count++;
         } else {
-            eventLogger.logEvent((Event) evt);
+            eventLogger.logEvent(evt);
         }
-        count++;
+
     }
 
     public void setEventLogger(final EventLogger eventLogger) {

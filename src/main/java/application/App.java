@@ -1,3 +1,7 @@
+package application;
+
+import application.aspects.StatisticAspect;
+import application.loggers.EventLogger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -11,8 +15,7 @@ public class App {
     private StatisticAspect statisticAspect;
 
 
-
-    public App(final Client client, final EventLogger eventLogger, Map<EventType,EventLogger> loggers) {
+    public App(final Client client, final EventLogger eventLogger, Map<EventType, EventLogger> loggers) {
         this.client = client;
         this.eventLogger = eventLogger;
         this.loggers = loggers;
@@ -24,7 +27,7 @@ public class App {
 
         App app = (App) ctx.getBean("app");
         Client client = ctx.getBean(Client.class);
-        System.out.println("Client says: " + client.getGreeting());
+        System.out.println("application.Client says: " + client.getGreeting());
         app.logEvents(ctx);
 
         app.outputLoggingCounter();
@@ -72,7 +75,7 @@ public class App {
     private void outputLoggingCounter() {
         if (getStatisticAspect() != null) {
             System.out.println("Loggers statistics. Number of calls: ");
-            for (Map.Entry<Class<?>, Integer> entry: getStatisticAspect().getCounter().entrySet()) {
+            for (Map.Entry<Class<?>, Integer> entry : getStatisticAspect().getCounter().entrySet()) {
                 System.out.println("    " + entry.getKey().getSimpleName() + ": " + entry.getValue());
             }
         } else {

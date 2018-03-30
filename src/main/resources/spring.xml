@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/util
-        http://www.springframework.org/schema/util/spring-util-3.2.xsd
-        http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd">
     <context:annotation-config/>
-    <aop:aspectj-autoproxy/>
+    <context:component-scan base-package="application"/>
     <import resource="loggers.xml"/>
+    <import resource="aspects.xml"/>
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
@@ -24,33 +20,28 @@
         <property name="ignoreResourceNotFound" value="true"/>
         <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
     </bean>
-    <bean id="client" class="Client">
+    <bean id="client" class="application.Client">
         <constructor-arg value="${id}"/>
         <constructor-arg value="${name}"/>
         <property name="greeting" value="${greeting}"/>
     </bean>
-    <bean id="app" class="App">
+    <bean id="app" class="application.App">
         <property name="statisticAspect" ref="statisticAspect"/>
         <constructor-arg ref="client"/>
-        <constructor-arg ref="eventLogger"/>
+        <constructor-arg ref="consoleEventLogger"/>
         <constructor-arg>
             <map>
-                <entry key="INFO" value-ref="eventLogger"/>
+                <entry key="INFO" value-ref="consoleEventLogger"/>
                 <entry key="ERROR" value-ref="combinedEventLogger"/>
             </map>
         </constructor-arg>
-
     </bean>
-    <bean id="event" class="Event" scope="prototype">
+    <bean id="event" class="application.Event" scope="prototype">
         <constructor-arg>
             <bean class="java.util.Date"/>
         </constructor-arg>
         <constructor-arg>
             <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance"/>
         </constructor-arg>
-    </bean>
-    <bean id="statisticAspect" class="StatisticAspect"/>
-    <bean id="maxCountAspect" class="MaxCountAspect">
-        <property name="eventLogger"  ref="fileEventLogger"/>
     </bean>
 </beans>

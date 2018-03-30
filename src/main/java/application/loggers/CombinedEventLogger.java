@@ -1,6 +1,8 @@
-import java.util.Collection;
+package application.loggers;
+
+import application.Event;
+
 import java.util.List;
-import java.util.Map;
 
 public class CombinedEventLogger implements EventLogger {
     private List<EventLogger> loggers;
@@ -10,8 +12,8 @@ public class CombinedEventLogger implements EventLogger {
     }
 
     public void logEvent(final Event event) {
-        for (EventLogger logger: loggers) {
-             logger.logEvent(event);
+        for (EventLogger logger : loggers) {
+            logger.logEvent(event);
         }
     }
 }
